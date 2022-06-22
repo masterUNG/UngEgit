@@ -1,6 +1,11 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:ungegat/models/user_model.dart';
+import 'package:ungegat/states/my_service.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/utility/my_dialog.dart';
 import 'package:ungegat/widgets/show_button.dart';
@@ -64,7 +69,7 @@ class _AuthenState extends State<Authen> {
                 title: 'Have Space ?', subTitle: 'Please Fill Every Blank');
           } else {
             print('No Space');
-            
+            processCheckLogin();
           }
         },
       ),
@@ -133,5 +138,42 @@ class _AuthenState extends State<Authen> {
         ],
       ),
     );
+  }
+
+  Future<void> processCheckLogin() async {
+    String path =
+        'https://www.androidthai.in.th/egat/getUserWhereUserUng.php?isAdd=true&user=$user';
+
+    await Dio().get(path).then((value) {
+      print('value ==> $value');
+
+      if (value.toString() == 'null') {
+        MyDialog(context: context).normalDialog(
+            title: 'User False', subTitle: 'No $user in my Database');
+      } else {
+        var result = json.decode(value.data);
+        print('result ==> $result');
+        for (var element in result) {
+          UserModel userModel = UserModel.fromMap(element);
+          if (password == userModel.password) {
+            MyDialog(context: context).normalDialog(
+                pressFunc: () {
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyService(),
+                      ),
+                      (route) => false);
+                },
+                label: 'Go to Service',
+                title: 'Welcome to App',
+                subTitle: 'Login Success Welcome ${userModel.name}');
+          } else {
+            MyDialog(context: context).normalDialog(
+                title: 'Password False', subTitle: 'Please Try Again');
+          }
+        }
+      }
+    });
   }
 }
