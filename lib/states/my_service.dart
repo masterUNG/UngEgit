@@ -5,6 +5,7 @@ import 'package:ungegat/bodys/non_finish_job.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/utility/my_dialog.dart';
 import 'package:ungegat/widgets/show_icon_button.dart';
+import 'package:ungegat/widgets/show_text.dart';
 
 class MyService extends StatefulWidget {
   const MyService({Key? key}) : super(key: key);
@@ -65,6 +66,11 @@ class _MyServiceState extends State<MyService> {
 
   AppBar newAppBar(BuildContext context) {
     return AppBar(
+      centerTitle: true,
+      title: ShowText(
+        text: titles[indexBodys],
+        textStyle: MyConstant().h2Style(),
+      ),
       elevation: 0,
       foregroundColor: MyConstant.dark,
       backgroundColor: Colors.white,
