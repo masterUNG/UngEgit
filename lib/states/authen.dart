@@ -64,6 +64,7 @@ class _AuthenState extends State<Authen> {
                 title: 'Have Space ?', subTitle: 'Please Fill Every Blank');
           } else {
             print('No Space');
+            
           }
         },
       ),

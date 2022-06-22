@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ungegat/utility/my_constant.dart';
 import 'package:ungegat/widgets/show_image.dart';
 import 'package:ungegat/widgets/show_text.dart';
+import 'package:ungegat/widgets/show_text_button.dart';
 
 class MyDialog {
   final BuildContext context;
@@ -28,6 +29,13 @@ class MyDialog {
           ),
           subtitle: ShowText(text: subTitle),
         ),
+        actions: [
+          ShowTextButton(
+              label: 'OK',
+              pressFunc: () {
+                Navigator.pop(context);
+              })
+        ],
       ),
     );
   }
