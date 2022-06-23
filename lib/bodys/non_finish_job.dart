@@ -22,6 +22,11 @@ class _NonFinishJobState extends State<NonFinishJob> {
   void initState() {
     super.initState();
     dataUserLogin = widget.dataUserLogins;
+    readDataJob();
+  }
+
+  Future<void> readDataJob() async {
+    String path = 'https://www.androidthai.in.th/egat/getUserWhereIdOfficerUng.php?isAdd=true&idOfficer=$idOfficer';
   }
 
   @override
