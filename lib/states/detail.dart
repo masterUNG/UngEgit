@@ -1,5 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:ungegat/models/job_model.dart';
 import 'package:ungegat/utility/my_constant.dart';
@@ -21,11 +24,25 @@ class Detail extends StatefulWidget {
 
 class _DetailState extends State<Detail> {
   JobModel? jobModel;
+  File? file;
 
   @override
   void initState() {
     super.initState();
     jobModel = widget.jobModel;
+  }
+
+  Future<void> processTakePhoto({required ImageSource imageSource}) async {
+    var result = await ImagePicker().pickImage(
+      source: imageSource,
+      maxWidth: 800,
+      maxHeight: 800,
+    );
+
+    if (result != null) {
+      file = File(result.path);
+      setState(() {});
+    }
   }
 
   @override
@@ -60,11 +77,13 @@ class _DetailState extends State<Detail> {
       width: boxConstraints.maxWidth * 0.6,
       child: Stack(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(24.0),
-            child: ShowImage(
-              path: 'images/image.png',
-            ),
+          Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: file == null
+                ? const ShowImage(
+                    path: 'images/image.png',
+                  )
+                : Image.file(file!),
           ),
           Positioned(
             right: 0,
@@ -73,10 +92,16 @@ class _DetailState extends State<Detail> {
               iconData: Icons.add_a_photo,
               pressFunc: () {
                 MyDialog(context: context).normalDialog(
-                  label: 'Camera',
-                  label2: 'Gallery',
-                  pressFunc: (){},
-                  pressFunc2: (){},
+                    label: 'Camera',
+                    label2: 'Gallery',
+                    pressFunc: () {
+                      processTakePhoto(imageSource: ImageSource.camera);
+                      Navigator.pop(context);
+                    },
+                    pressFunc2: () {
+                      processTakePhoto(imageSource: ImageSource.gallery);
+                      Navigator.pop(context);
+                    },
                     title: 'Source Image',
                     subTitle: 'Please Tab Camera or Gallery');
               },
