@@ -1,9 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.flutterthailand.ungegat">
+    package="com.flutterthailand.masterungegat">
    <application
         android:label="ungegat"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyAIbJQgLMDXruNXoZerLwYpMR5U9L45Jow"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

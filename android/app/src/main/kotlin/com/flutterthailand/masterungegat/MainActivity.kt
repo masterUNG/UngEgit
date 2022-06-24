@@ -1,4 +1,4 @@
-package com.flutterthailand.ungegat
+package com.flutterthailand.masterungegat
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -27,8 +27,6 @@ Future<void> main() async {
     firstState = '/myService';
     runApp(MyApp());
   }
-
-  
 }
 
 class MyApp extends StatelessWidget {
@@ -36,9 +34,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false,
-     routes: map,
-     initialRoute: firstState,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      routes: map,
+      initialRoute: firstState,
     );
   }
 }
